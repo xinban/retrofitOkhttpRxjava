@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".http.MainActivity">
+
+    <TextView
+        android:id="@+id/post"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:onClick="Post"
+        android:text="POST" />
+
+    <TextView
+        android:id="@+id/get"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:onClick="Get"
+        android:text="GET"
+        app:layout_constraintTop_toBottomOf="@+id/post" />
+    <TextView
+        android:id="@+id/upload"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:onClick="Upload"
+        android:text="UPLOAD"
+        app:layout_constraintTop_toBottomOf="@+id/get" />
+    <TextView
+        android:id="@+id/download"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:onClick="Download"
+        android:text="DOWNLOAD"
+        app:layout_constraintTop_toBottomOf="@+id/upload" />
+
+</android.support.constraint.ConstraintLayout>
