@@ -16,7 +16,6 @@ import okhttp3.MultipartBody;
 
 public class MainActivity extends BaseActivity<MainPresenterImp> implements MainContract.MainView {
     private final String TAG = "MainActivity";
-    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,6 @@ public class MainActivity extends BaseActivity<MainPresenterImp> implements Main
     protected void initView() {
         super.initView();
         presenter = new MainPresenterImp(this);
-        textView = findViewById(R.id.content);
     }
 
     @Override
