@@ -5,7 +5,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * @author banXin
  * @date 2018/8/20 0020
- * @Description:  {@link MyObserver}中的onError()与onMError()会同时执行，监听一个即可
+ * @Description:  {@link #onError(Throwable)} 中的onError()与onMError()会同时执行，监听一个即可
  */
 public abstract class ProgressObserver<T> extends MyObserver<T> {
 

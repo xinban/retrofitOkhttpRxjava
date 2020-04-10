@@ -1,13 +1,21 @@
 package com.xb.http.demo.constroller.base;
 
+import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
 /**
  * @author banXin
  * @date 2018/7/12 0012
  * @purpose:
  */
 public class BasePresenter<V extends BaseView> implements MPresenter<V> {
-
+    protected WeakReference<V> mWeakreView;
     protected V mView;
+
+    protected V proxyView;
+
     /**
      * Presenter与View建立连接
      *
@@ -15,15 +23,21 @@ public class BasePresenter<V extends BaseView> implements MPresenter<V> {
      */
     @Override
     public void attachView(V mView) {
-        this.mView = mView;
+        if (mWeakreView == null) {
+            mWeakreView = new WeakReference<V>(mView);
+        }
+        proxyView = (V) Proxy.newProxyInstance(mView.getClass().getClassLoader(), mView.getClass().getInterfaces(), new MInvocationHandler(mWeakreView.get()));
     }
-
+ 
     /**
      * Presenter与View连接断开
      */
     @Override
     public void detachView() {
-        this.mView = null;
+        if (isViewAttached()) {
+            mWeakreView.clear();
+            mWeakreView = null;
+        }
     }
 
     /**
@@ -32,7 +46,7 @@ public class BasePresenter<V extends BaseView> implements MPresenter<V> {
      * @return
      */
     public boolean isViewAttached() {
-        return mView != null;
+        return mWeakreView != null && mWeakreView.get() != null;
     }
 
     /**
@@ -41,7 +55,25 @@ public class BasePresenter<V extends BaseView> implements MPresenter<V> {
      * @return
      */
     public V getmView() {
-        return mView;
+        return proxyView;
+    }
+
+
+    private class MInvocationHandler implements InvocationHandler {
+        private BaseView mView;
+
+        public MInvocationHandler(BaseView view) {
+            mView = view;
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+            if (isViewAttached()) {
+                return method.invoke(mView, args);
+            }
+            return null;
+        }
     }
 
 }
